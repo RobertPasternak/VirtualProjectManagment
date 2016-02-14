@@ -1,0 +1,21 @@
+﻿@using BackendlessAPI
+
+@if (Request.IsAuthenticated)
+{
+
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Welcome x!", "Index", "Home")</li>
+            <li><a href="#">Log off</a></li>
+        </ul>
+    
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Index", "Home")</li>
+        <li>@Html.ActionLink("Log in", "Index", "Home")</li>
+    </ul>
+}
+
