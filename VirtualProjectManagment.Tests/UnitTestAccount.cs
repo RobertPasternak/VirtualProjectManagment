@@ -4,11 +4,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace VirtualProjectManagment.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTestAccount
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestMethod()
         {
+            
+
         }
     }
 }
