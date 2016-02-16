@@ -1,13 +1,18 @@
 ﻿@using BackendlessAPI
 
-@if (Request.IsAuthenticated)
+@{
+    BackendlessUser user = Backendless.UserService.CurrentUser;
+}
+
+
+@if (user != null)
 {
 
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li>@Html.ActionLink("Witaj x!", "Index", "Home")</li>
-            <li><a href="#">Wyloguj</a></li>
+            <li>@Html.ActionLink("Witaj " + (String)user.Properties["name"] + "!", "Index", "Home")</li>
+            <li>@Html.ActionLink("Wyloguj się", "Logout", "Account")</li>
         </ul>
     
 }

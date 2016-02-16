@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BackendlessAPI;
+using BackendlessAPI.Exception;
 using VirtualProjectManagment.Models;
 
 namespace VirtualProjectManagment.Controllers
@@ -20,13 +22,37 @@ namespace VirtualProjectManagment.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (accountModels.Login == "123" && accountModels.Password == "123")
-                {                  
-                    return RedirectToAction("Index", "Home");
+
+                try
+                {
+                    Backendless.UserService.Login(accountModels.Login, accountModels.Password);
+                    if (Backendless.UserService.IsValidLogin())
+                    {
+                        return RedirectToAction("Menu", "Application");
+                    }
                 }
-                ModelState.AddModelError("", "Błędne dane logowania");
+                catch (BackendlessException exception)
+                {
+                    if (exception.FaultCode == "3003")
+                    {
+                        ModelState.AddModelError("", "Błędne dane logowania");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", exception.ToString());
+                    }
+                }
+
             }
             return View(accountModels);
         }
+
+        public ActionResult Logout()
+        {
+            Backendless.UserService.Logout();
+            return RedirectToAction("Index", "Home");
+        }
+
+
     }
 }
