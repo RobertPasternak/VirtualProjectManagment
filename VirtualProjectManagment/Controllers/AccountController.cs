@@ -45,6 +45,7 @@ namespace VirtualProjectManagment.Controllers
             return View(loginModel);
         }
 
+
         public ActionResult Logout()
         {
             Backendless.UserService.Logout();
@@ -63,8 +64,27 @@ namespace VirtualProjectManagment.Controllers
         {
             if (ModelState.IsValid)
             {
-                //do sth
-                return RedirectToAction("Login", "Account");
+                try
+                {
+                    BackendlessUser newUser = new BackendlessUser();
+                    newUser.SetProperty("login", registerModel.Login);
+                    newUser.SetProperty("email", registerModel.Email);
+                    newUser.SetProperty("name", registerModel.Name);
+                    newUser.Password = registerModel.Password;
+                    Backendless.UserService.Register(newUser);
+                    return RedirectToAction("Login", "Account");
+                }
+                catch (BackendlessException exception)
+                {
+                    if (exception.FaultCode == "3033")
+                    {
+                        ModelState.AddModelError("", "Login jest zajęty.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", exception.ToString());
+                    }
+                }
             }
             return View(registerModel);
         }

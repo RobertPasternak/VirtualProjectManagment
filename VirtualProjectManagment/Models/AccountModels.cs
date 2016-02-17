@@ -31,7 +31,7 @@ namespace VirtualProjectManagment.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0} musi mieć co najmniej {2} znaków długości.", MinimumLength = 6)]
+        [MinLength(6, ErrorMessage = "{0} musi mieć co najmniej {1} znaków długości.")]
         [Display(Name = "Hasło")]
         public string Password { get; set; }
 
