@@ -8,7 +8,7 @@ using Weborb.Service;
 
 namespace VirtualProjectManagment.Models
 {
-    public class AccountModels
+    public class LoginModel
     {
         [Required]
         [Display(Name = "Login")]
@@ -17,5 +17,31 @@ namespace VirtualProjectManagment.Models
         [Required]
         [Display(Name = "Hasło")]
         public string Password { get; set; }     
+    }
+
+    public class RegisterModel
+    {
+        [Required]
+        [Display(Name = "Login")]
+        public string Login { get; set; }
+
+        [Required]
+        [EmailAddress(ErrorMessage = "Błędny adres {0}.")]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "{0} musi mieć co najmniej {2} znaków długości.", MinimumLength = 6)]
+        [Display(Name = "Hasło")]
+        public string Password { get; set; }
+
+        [Required]
+        [Display(Name = "Potwierdź Hasło")]
+        [Compare("Password", ErrorMessage = "Hasła nie są identyczne")]
+        public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Imię")]
+        public string Name { get; set; }
     }
 }

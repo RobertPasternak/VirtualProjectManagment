@@ -18,14 +18,13 @@ namespace VirtualProjectManagment.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(AccountModels accountModels)
+        public ActionResult Login(LoginModel loginModel)
         {
             if (ModelState.IsValid)
             {
-
                 try
                 {
-                    Backendless.UserService.Login(accountModels.Login, accountModels.Password);
+                    Backendless.UserService.Login(loginModel.Login, loginModel.Password);
                     if (Backendless.UserService.IsValidLogin())
                     {
                         return RedirectToAction("Menu", "Application");
@@ -35,16 +34,15 @@ namespace VirtualProjectManagment.Controllers
                 {
                     if (exception.FaultCode == "3003")
                     {
-                        ModelState.AddModelError("", "Błędne dane logowania");
+                        ModelState.AddModelError("", "Błędne dane logowania.");
                     }
                     else
                     {
                         ModelState.AddModelError("", exception.ToString());
                     }
                 }
-
             }
-            return View(accountModels);
+            return View(loginModel);
         }
 
         public ActionResult Logout()
@@ -54,5 +52,21 @@ namespace VirtualProjectManagment.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(RegisterModel registerModel)
+        {
+            if (ModelState.IsValid)
+            {
+                //do sth
+                return RedirectToAction("Login", "Account");
+            }
+            return View(registerModel);
+        }
     }
 }
