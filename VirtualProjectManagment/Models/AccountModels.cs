@@ -44,4 +44,14 @@ namespace VirtualProjectManagment.Models
         [Display(Name = "Imię")]
         public string Name { get; set; }
     }
+
+    public class ForgotPasswordModel
+    {
+        [Required]
+        [Display(Name = "Login")]
+        public string Login { get; set; }
+    }
+
 }
+
+

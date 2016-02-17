@@ -11,6 +11,17 @@ namespace VirtualProjectManagment.Controllers
 {
     public class AccountController : Controller
     {
+
+
+
+        public ActionResult Logout()
+        {
+            Backendless.UserService.Logout();
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -45,12 +56,6 @@ namespace VirtualProjectManagment.Controllers
             return View(loginModel);
         }
 
-
-        public ActionResult Logout()
-        {
-            Backendless.UserService.Logout();
-            return RedirectToAction("Index", "Home");
-        }
 
 
         [HttpGet]
@@ -87,6 +92,39 @@ namespace VirtualProjectManagment.Controllers
                 }
             }
             return View(registerModel);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Backendless.UserService.RestorePassword(forgotPasswordModel.Login);
+                    ModelState.AddModelError("", "Nowe hasło zostało wysłane.");
+                }
+                catch (BackendlessException exception)
+                {
+                    if (exception.FaultCode == "3020")
+                    {
+                        ModelState.AddModelError("", "Użytkownik nie istnieje.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", exception.ToString());
+                    }
+                }
+            }
+            return View(forgotPasswordModel);
         }
     }
 }

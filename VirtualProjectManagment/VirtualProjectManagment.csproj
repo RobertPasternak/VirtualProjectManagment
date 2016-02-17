@@ -142,6 +142,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Application\Menu.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

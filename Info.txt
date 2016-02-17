@@ -1,0 +1,10 @@
+
+Resetowanie has³a:
+Maile z nowym has³em czasami d³ugo dochodz¹.
+Przyda³aby siê dodatkowa walidacja, sam login do zresetowania has³a to za ma³o.
+
+Strona g³ówna:
+Przyda³oby siê j¹ w koñcu zrobiæ :)
+
+Kontroler Account:
+Dodatkowe wy³apywanie b³êdów dla ka¿dej akcji.

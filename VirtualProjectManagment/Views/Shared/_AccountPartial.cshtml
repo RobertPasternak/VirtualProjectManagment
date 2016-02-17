@@ -11,7 +11,7 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li>@Html.ActionLink("Witaj " + (String)user.Properties["name"] + "!", "Index", "Home")</li>
+            <li>@Html.ActionLink("Witaj " + (string)user.Properties["name"] + "!", "Index", "Home")</li>
             <li>@Html.ActionLink("Wyloguj się", "Logout", "Account")</li>
         </ul>
     
