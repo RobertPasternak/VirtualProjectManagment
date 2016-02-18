@@ -38,7 +38,7 @@ namespace VirtualProjectManagment.Controllers
                     Backendless.UserService.Login(loginModel.Login, loginModel.Password);
                     if (Backendless.UserService.IsValidLogin())
                     {
-                        return RedirectToAction("Menu", "Application");
+                        return RedirectToAction("Overview", "Application");
                     }
                 }
                 catch (BackendlessException exception)
