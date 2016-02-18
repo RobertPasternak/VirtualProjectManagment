@@ -126,5 +126,63 @@ namespace VirtualProjectManagment.Controllers
             }
             return View(forgotPasswordModel);
         }
+
+
+        [HttpGet]
+        public ActionResult UserProfile()
+        {
+            BackendlessUser user = Backendless.UserService.CurrentUser;
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            UserProfileModel userProfileModel = new UserProfileModel();
+
+            userProfileModel.Email = (string)user.Properties["email"];
+            userProfileModel.Name = (string) user.Properties["name"];
+
+            return View(userProfileModel);
+        }
+
+        [HttpPost]
+        public ActionResult UserProfile(UserProfileModel userProfileModel)
+        {
+            BackendlessUser user = Backendless.UserService.CurrentUser;
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string loggedInUserName = (string) user.Properties["login"];
+                    Backendless.UserService.Logout();
+                    Backendless.UserService.Login(loggedInUserName, userProfileModel.OldPassword);
+                    if (Backendless.UserService.IsValidLogin())
+                    {
+                        
+                        user.Password = userProfileModel.NewPassword;                        
+                        user.SetProperty("name", userProfileModel.Name);
+                        user.SetProperty("email", userProfileModel.Email);
+                        Backendless.UserService.Update(user);
+                        ModelState.AddModelError("", "Zaktualizowano dane użytkownika.");
+                    }                  
+                }
+                catch (BackendlessException exception)
+                {
+                    if (exception.FaultCode == "3003")
+                    {
+                        ModelState.AddModelError("", "Błędne hasło użytkownika.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", exception.ToString());
+                    }
+                }
+            }
+            return View(userProfileModel);
+        }
+
     }
 }
