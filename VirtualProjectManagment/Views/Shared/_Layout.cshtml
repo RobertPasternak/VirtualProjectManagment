@@ -22,10 +22,7 @@
             @Html.ActionLink("VirtualProjectManagment", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Informacje", "Index", "Home")</li>
-                <li>@Html.ActionLink("Kontakt", "Index", "Home")</li>
-            </ul>
+            @Html.Partial("_ApplicationPartial")
             @Html.Partial("_AccountPartial")
         </div>
     </div>
