@@ -157,17 +157,13 @@ namespace VirtualProjectManagment.Controllers
                 try
                 {
                     string loggedInUserName = (string) user.Properties["login"];
-                    Backendless.UserService.Logout();
                     Backendless.UserService.Login(loggedInUserName, userProfileModel.OldPassword);
-                    if (Backendless.UserService.IsValidLogin())
-                    {
-                        
-                        user.Password = userProfileModel.NewPassword;                        
-                        user.SetProperty("name", userProfileModel.Name);
-                        user.SetProperty("email", userProfileModel.Email);
-                        Backendless.UserService.Update(user);
-                        ModelState.AddModelError("", "Zaktualizowano dane użytkownika.");
-                    }                  
+                    user.Password = userProfileModel.NewPassword;                        
+                    user.SetProperty("name", userProfileModel.Name);
+                    user.SetProperty("email", userProfileModel.Email);
+                    Backendless.UserService.Update(user);
+                    ModelState.AddModelError("", "Zaktualizowano dane użytkownika.");
+                                    
                 }
                 catch (BackendlessException exception)
                 {
