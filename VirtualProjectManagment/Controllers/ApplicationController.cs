@@ -14,14 +14,16 @@ namespace VirtualProjectManagment.Controllers
     public class ApplicationController : Controller
     {
         // GET: Application
-        public ActionResult Overview()
+        public ActionResult Overview(OverviewModel overviewModel)
         {
             BackendlessUser user = Backendless.UserService.CurrentUser;
             if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            return View();
+
+            
+            return View(overviewModel);
         }
 
         [HttpGet]
@@ -36,7 +38,7 @@ namespace VirtualProjectManagment.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTask(AddTaskModel addTaskModel)
+        public ActionResult AddTask(TaskModel taskModel)
         {
             BackendlessUser user = Backendless.UserService.CurrentUser;
             if (user == null)
@@ -45,12 +47,14 @@ namespace VirtualProjectManagment.Controllers
             }
             if (ModelState.IsValid)
             {
-                addTaskModel.TaskAuthor = (string) user.Properties["name"] + " " + (string) user.Properties["surname"];
-                addTaskModel.TaskCreateDate = DateTime.Now.Date;
+                taskModel.TaskAuthor = (string) user.Properties["name"] + " " + (string) user.Properties["surname"];
+                taskModel.TaskCreateDate = DateTime.Now.Date;
 
                 try
                 {
-                    Backendless.Data.Save(addTaskModel);                   
+                   
+
+                    Backendless.Data.Save(taskModel);                   
                 }
                 catch (BackendlessException exception)
                 {
@@ -63,7 +67,7 @@ namespace VirtualProjectManagment.Controllers
                 ModelState.AddModelError("","Zadanie zostało dodane.");
                 return RedirectToAction("Overview", "Application");
             }
-            return View(addTaskModel);
+            return View(taskModel);
         }
     }
 }
