@@ -75,6 +75,7 @@ namespace VirtualProjectManagment.Controllers
                     newUser.SetProperty("login", registerModel.Login);
                     newUser.SetProperty("email", registerModel.Email);
                     newUser.SetProperty("name", registerModel.Name);
+                    newUser.SetProperty("surname", registerModel.Surname);
                     newUser.Password = registerModel.Password;
                     Backendless.UserService.Register(newUser);
                     return RedirectToAction("Login", "Account");
@@ -139,7 +140,8 @@ namespace VirtualProjectManagment.Controllers
             UserProfileModel userProfileModel = new UserProfileModel();
 
             userProfileModel.Email = (string)user.Properties["email"];
-            userProfileModel.Name = (string) user.Properties["name"];
+            userProfileModel.Name = (string)user.Properties["name"];
+            userProfileModel.Surname = (string)user.Properties["surname"];
 
             return View(userProfileModel);
         }
@@ -160,6 +162,7 @@ namespace VirtualProjectManagment.Controllers
                     Backendless.UserService.Login(loggedInUserName, userProfileModel.OldPassword);
                     user.Password = userProfileModel.NewPassword;                        
                     user.SetProperty("name", userProfileModel.Name);
+                    user.SetProperty("surname", userProfileModel.Surname);
                     user.SetProperty("email", userProfileModel.Email);
                     Backendless.UserService.Update(user);
                     ModelState.AddModelError("", "Zaktualizowano dane użytkownika.");

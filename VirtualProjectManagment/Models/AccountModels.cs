@@ -43,6 +43,10 @@ namespace VirtualProjectManagment.Models
         [Required]
         [Display(Name = "Imię")]
         public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Nazwisko")]
+        public string Surname { get; set; }
     }
 
     public class ForgotPasswordModel
@@ -58,6 +62,10 @@ namespace VirtualProjectManagment.Models
         [Required]
         [Display(Name = "Imię")]
         public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Nazwisko")]
+        public string Surname { get; set; }
 
 
         [Required]

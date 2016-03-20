@@ -1,0 +1,88 @@
+﻿@model VirtualProjectManagment.Models.AddTaskModel
+
+
+@{
+    ViewBag.Title = "Dodaj Zadanie";
+}
+
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        @Html.AntiForgeryToken()
+
+        <hr/>
+
+        <div class="col-md-offset-4">
+            @Html.ValidationSummary()
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TaskName, new {@class = "col-md-4 control-label"})
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.TaskName, new {@class = "form-control"})
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TaskPriority, new {@class = "col-md-4 control-label"})
+            <div class="col-md-8">
+                @Html.DropDownListFor(m => m.TaskPriority, new[]
+                {
+                    new SelectListItem() {Text = "Krytyczny", Value = "Krytyczny"},
+                    new SelectListItem() {Text = "Bardzo Wysoki", Value = "Bardzo Wysoki"},
+                    new SelectListItem() {Text = "Wysoki", Value = "Wysoki"},
+                    new SelectListItem() {Text = "Średni", Value = "Średni"},
+                    new SelectListItem() {Text = "Niski", Value = "Niski"}
+                }, "Wybierz Priorytet", new {@class = "form-control"})
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TaskStatus, new {@class = "col-md-4 control-label"})
+            <div class="col-md-8">
+                @Html.DropDownListFor(m => m.TaskStatus, new[]
+                {
+                    new SelectListItem() {Text = "Otwarte", Value = "Otwarte"},
+                    new SelectListItem() {Text = "W Trakcie", Value = "W Trakcie"},
+                    new SelectListItem() {Text = "Przegląd Kodu", Value = "Przegląd Kodu"},
+                    new SelectListItem() {Text = "Zakończone", Value = "Zakończone"}
+                }, "Wybierz Status", new {@class = "form-control"})
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TaskDueDate, new {@class = "col-md-4 control-label"})
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.TaskDueDate, new {@class = "form-control datepicker", @Value = @DateTime.Now.Date.ToShortDateString()})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TaskAssignedToUser, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.TaskAssignedToUser, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TaskDescription, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextAreaFor(m => m.TaskDescription, new { @class = "form-control"})
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                <input type="submit" value="Dodaj Zadanie" class="btn btn-default"/>
+                @Html.ActionLink("Powrót", "Overview", "Application", new {@class = "btn btn-default"})
+            </div>
+        </div>
+    </div>
+}
+
