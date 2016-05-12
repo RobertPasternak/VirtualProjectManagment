@@ -9,6 +9,7 @@ using System.Web.Configuration;
 using BackendlessAPI;
 using BackendlessAPI.Data;
 using BackendlessAPI.Persistence;
+using VirtualProjectManagment.Services;
 using Weborb.Service;
 
 namespace VirtualProjectManagment.Models
@@ -18,7 +19,7 @@ namespace VirtualProjectManagment.Models
         public OverviewModel()
         {
             BackendlessUser user = Backendless.UserService.CurrentUser;
-
+            TaskRepository taskRepo = new TaskRepository();
             /*
             m_nStart = Environment.TickCount;
             Timer oTimer = new Timer();
@@ -26,7 +27,7 @@ namespace VirtualProjectManagment.Models
             oTimer.Interval = 10;
             oTimer.Enabled = true;
             */
-            ListOfAllTasks = GetObjectsFromTable("TaskName LIKE '%'");
+            ListOfAllTasks = taskRepo.GetObjectsFromTable("TaskName LIKE '%'");
             ListOfUserTasks = new List<TaskModel>();
 
             foreach (var task in ListOfAllTasks)
@@ -94,21 +95,6 @@ namespace VirtualProjectManagment.Models
         public List<TaskModel> ListOfAllTasks { get; set; }
 
         public List<TaskModel> ListOfUserTasks { get; set; }
-
-        public List<TaskModel> GetObjectsFromTable(string query)
-        {
-            string whereClause = (query);
-            BackendlessDataQuery dataQuery = new BackendlessDataQuery(whereClause) { QueryOptions = new QueryOptions() };
-            return Backendless.Persistence.Of<TaskModel>().Find(dataQuery).Data;
-        }
-
-        public int GetNumberOfObjectsFromTable(string query)
-        {
-            string whereClause = (query);
-            BackendlessDataQuery dataQuery = new BackendlessDataQuery(whereClause) { QueryOptions = new QueryOptions() };
-            return Backendless.Data.Of<TaskModel>().Find(dataQuery).TotalObjects;
-        }
-
     }
 
     public class TaskModel
@@ -123,22 +109,22 @@ namespace VirtualProjectManagment.Models
         [Display(Name = "Nazwa Zadania")]
         public string TaskName { get; set; }
 
-
+        [Display(Name = "Data Stworzenia")]
         [DataType(DataType.Date)]
         public DateTime TaskCreateDate { get; set; }
 
 
         [Required]
-        [Display(Name = "Termin Zakończenia Zadania")]
+        [Display(Name = "Termin Zakończenia")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime TaskDueDate {get;set;}
 
-
+        [Display(Name = "Autor")]
         public string TaskAuthor { get; set; }
 
         [Required]
-        [Display(Name = "Zadanie Przypisane do Użytkownika")]
+        [Display(Name = "Przypisane do")]
         public string TaskAssignedToUser { get; set; }
 
         [Required]

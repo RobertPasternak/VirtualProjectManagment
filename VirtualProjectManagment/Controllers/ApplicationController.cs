@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BackendlessAPI;
@@ -8,11 +9,13 @@ using BackendlessAPI.Data;
 using BackendlessAPI.Exception;
 using BackendlessAPI.Persistence;
 using VirtualProjectManagment.Models;
+using VirtualProjectManagment.Services;
 
 namespace VirtualProjectManagment.Controllers
 {
     public class ApplicationController : Controller
     {
+        private TaskRepository taskRepo = new TaskRepository();
         // GET: Application
         public ActionResult Overview(OverviewModel overviewModel)
         {
@@ -50,15 +53,11 @@ namespace VirtualProjectManagment.Controllers
 
                 try
                 {
-                   
-
                     Backendless.Data.Save(taskModel);                   
                 }
                 catch (BackendlessException exception)
-                {
-                    
-                    ModelState.AddModelError("", exception.ToString());
-                    
+                {                    
+                    ModelState.AddModelError("", exception.ToString());                    
                 }
 
 
@@ -66,6 +65,23 @@ namespace VirtualProjectManagment.Controllers
                 return RedirectToAction("Overview", "Application");
             }
             return View(taskModel);
+        }
+
+        public ActionResult TaskDetails(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BackendlessUser user = Backendless.UserService.CurrentUser;
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            TaskModel task = taskRepo.GetObjectsFromTable("objectId LIKE '" + id + "'").First();
+
+            return View(task);
         }
     }
 }

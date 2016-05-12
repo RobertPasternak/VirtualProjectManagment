@@ -1,0 +1,76 @@
+﻿@model VirtualProjectManagment.Models.TaskModel
+
+@{
+    ViewBag.Title = "Szczegóły Zadania";
+}
+
+<h2>Szczegóły Zadania</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskPriority)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskPriority)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskStatus)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskCreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskCreateDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskDueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskDueDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskAuthor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskAuthor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskAssignedToUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskAssignedToUser)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Powrót do Przeglądu", "Overview") |
+    @Html.ActionLink("Powrót do Przeglądu", "Overview")
+</p>
