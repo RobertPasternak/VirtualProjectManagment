@@ -20,9 +20,7 @@ namespace VirtualProjectManagment.Controllers
             if (user == null)
             {
                 return RedirectToAction("Index", "Home");
-            }
-
-            
+            }      
             return View(overviewModel);
         }
 

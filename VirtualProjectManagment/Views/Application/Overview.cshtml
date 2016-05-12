@@ -15,11 +15,12 @@
 <div class="row">
     <div class="col-md-12">
         <div class="list-group">
-            <a class="list-group-item active"><span class="badge">@Model.NumberOfTaskAssignedToUser</span>Twoje Zadania</a>
-            @foreach (var task in Model.ListOfTasks)
-            {
-                <a href="@task.objectId" class="list-group-item">@task.TaskName</a>
-            }
+            <a class="list-group-item active"><span class="badge">@Model.NumberOfTasksAssignedToUser</span>Twoje Zadania</a>
+                @foreach (var task in Model.ListOfUserTasks)
+                 {
+                     <a href="@task.objectId" class="list-group-item">@task.TaskName</a>
+                 }
+            
         </div>
     </div>
 </div>
@@ -28,20 +29,20 @@
     <div class="col-md-6">
         <div class="list-group">
             <a class="list-group-item active"><span class="badge">@Model.TotalNumberOfTasks</span>Lista Wszystkich Zadań (Status)</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTaskWithStatusOpen</span>Otwarte</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTaskWithStatusInProgress</span>W Trakcie</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTaskWithStatusCodeReview</span>Przegląd Kodu</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTaskWithStatusDone</span>Zakończone</a>
+            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusOpen</span>Otwarte</a>
+            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusInProgress</span>W Trakcie</a>
+            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusCodeReview</span>Przegląd Kodu</a>
+            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusDone</span>Zakończone</a>
         </div>
     </div>
     <div class="col-md-6">
         <div class="list-group">
             <a class="list-group-item active"><span class="badge">@Model.TotalNumberOfTasks</span>Lista Wszystkich Zadań (Priorytet)</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTaskWithPriorityCritical</span>Krytyczny</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTaskWithPriorityVeryHigh</span>Bardzo Wysoki</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTaskWithPriorityHigh</span>Wysoki</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTaskWithPriorityMedium</span>Średni</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTaskWithPriorityLow</span>Niski</a>
+            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityCritical</span>Krytyczny</a>
+            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityVeryHigh</span>Bardzo Wysoki</a>
+            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityHigh</span>Wysoki</a>
+            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityMedium</span>Średni</a>
+            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityLow</span>Niski</a>
         </div>
     </div>
 

@@ -25,70 +25,41 @@ namespace VirtualProjectManagment.Models
             oTimer.Elapsed += new ElapsedEventHandler(OnTimeEvent);
             oTimer.Interval = 10;
             oTimer.Enabled = true;
-
-            
-            if (user != null)
-            {
-                NumberOfTaskAssignedToUser =
-                    GetNumberOfObjectsFromTable("TaskAssignedToUser = '" +
-                                                (string) user.Properties["name"] + " " +
-                                                (string) user.Properties["surname"] + "'");
-            }
-
-            TotalNumberOfTasks = GetNumberOfObjectsFromTable("TaskName LIKE '%'");
-
-            NumberOfTaskWithStatusOpen = GetNumberOfObjectsFromTable("TaskStatus = 'Otwarte'");
-            NumberOfTaskWithStatusInProgress = GetNumberOfObjectsFromTable("TaskStatus = 'W Trakcie'");
-            NumberOfTaskWithStatusCodeReview = GetNumberOfObjectsFromTable("TaskStatus = 'Przegląd Kodu'");
-            NumberOfTaskWithStatusDone = GetNumberOfObjectsFromTable("TaskStatus = 'Zakończone'");
-
-            NumberOfTaskWithPriorityCritical = GetNumberOfObjectsFromTable("TaskPriority = 'Krytyczny'");
-            NumberOfTaskWithPriorityVeryHigh = GetNumberOfObjectsFromTable("TaskPriority = 'Bardzo Wysoki'");
-            NumberOfTaskWithPriorityHigh = GetNumberOfObjectsFromTable("TaskPriority = 'Wysoki'");
-            NumberOfTaskWithPriorityMedium = GetNumberOfObjectsFromTable("TaskPriority = 'Średni'");
-            NumberOfTaskWithPriorityLow = GetNumberOfObjectsFromTable("TaskPriority = 'Niski'");
-
-
-            oTimer.Stop();
             */
+            ListOfAllTasks = GetObjectsFromTable("TaskName LIKE '%'");
+            ListOfUserTasks = new List<TaskModel>();
 
-            
-            List<Task> tasks = new List<Task>();
-
-
-            if (user != null)
+            foreach (var task in ListOfAllTasks)
             {
+                TotalNumberOfTasks++;
+                if (task.TaskStatus == "Otwarte")
+                    NumberOfTasksWithStatusOpen++;
+                if (task.TaskStatus == "W Trakcie")
+                    NumberOfTasksWithStatusInProgress++;
+                if (task.TaskStatus == "Przegląd Kodu")
+                    NumberOfTasksWithStatusCodeReview++;
+                if (task.TaskStatus == "Zakończone")
+                    NumberOfTasksWithStatusDone++;
+                if (task.TaskPriority == "Krytyczny")
+                    NumberOfTasksWithPriorityCritical++;
+                if (task.TaskPriority == "Bardzo Wysoki")
+                    NumberOfTasksWithPriorityVeryHigh++;
+                if (task.TaskPriority == "Wysoki")
+                    NumberOfTasksWithPriorityHigh++;
+                if (task.TaskPriority == "Średni")
+                    NumberOfTasksWithPriorityMedium++;
+                if (task.TaskPriority == "Niski")
+                    NumberOfTasksWithPriorityLow++;                
+                if (user != null && task.TaskAssignedToUser == (user.Properties["name"] + " " + user.Properties["surname"]))
+                {
+                    NumberOfTasksAssignedToUser++;
+                    ListOfUserTasks.Add(task);
+                }
 
-
-                tasks.Add(Task.Run(() => { NumberOfTaskAssignedToUser = GetNumberOfObjectsFromTable("TaskAssignedToUser = '" +
-                                         (string)user.Properties["name"] + " " +
-                                         (string)user.Properties["surname"] + "'"); }));
-
-                tasks.Add(Task.Run(() => { ListOfTasks = GetObjectsFromTable("TaskAssignedToUser = '" +
-                                         (string)user.Properties["name"] + " " +
-                                         (string)user.Properties["surname"] + "'"); }));
             }
-
-            tasks.Add(Task.Run(() => { TotalNumberOfTasks = GetNumberOfObjectsFromTable("TaskName LIKE '%'"); }));
-
-            tasks.Add(Task.Run(() => { NumberOfTaskWithStatusOpen = GetNumberOfObjectsFromTable("TaskStatus = 'Otwarte'"); }));
-            tasks.Add(Task.Run(() => { NumberOfTaskWithStatusInProgress = GetNumberOfObjectsFromTable("TaskStatus = 'W Trakcie'"); }));
-            tasks.Add(Task.Run(() => { NumberOfTaskWithStatusCodeReview = GetNumberOfObjectsFromTable("TaskStatus = 'Przegląd Kodu'"); }));
-            tasks.Add(Task.Run(() => { NumberOfTaskWithStatusDone = GetNumberOfObjectsFromTable("TaskStatus = 'Zakończone'"); }));
-
-            tasks.Add(Task.Run(() => { NumberOfTaskWithPriorityCritical = GetNumberOfObjectsFromTable("TaskPriority = 'Krytyczny'"); }));
-            tasks.Add(Task.Run(() => { NumberOfTaskWithPriorityVeryHigh = GetNumberOfObjectsFromTable("TaskPriority = 'Bardzo Wysoki'"); }));
-            tasks.Add(Task.Run(() => { NumberOfTaskWithPriorityHigh = GetNumberOfObjectsFromTable("TaskPriority = 'Wysoki'"); }));
-            tasks.Add(Task.Run(() => { NumberOfTaskWithPriorityMedium = GetNumberOfObjectsFromTable("TaskPriority = 'Średni'"); }));
-            tasks.Add(Task.Run(() => { NumberOfTaskWithPriorityLow = GetNumberOfObjectsFromTable("TaskPriority = 'Niski'"); }));
-
-
-
-            Task.WaitAll(tasks.ToArray());
-           
         }
 
-
+       
         /*
         private int m_nStart = 0;
 
@@ -105,22 +76,24 @@ namespace VirtualProjectManagment.Models
 
 
 
-        public int NumberOfTaskAssignedToUser { get; set; }
+        public int NumberOfTasksAssignedToUser { get; set; }
 
         public int TotalNumberOfTasks { get; set; }
 
-        public int NumberOfTaskWithPriorityCritical { get; set; }
-        public int NumberOfTaskWithPriorityVeryHigh { get; set; }
-        public int NumberOfTaskWithPriorityHigh { get; set; }
-        public int NumberOfTaskWithPriorityMedium { get; set; }
-        public int NumberOfTaskWithPriorityLow { get; set; }
+        public int NumberOfTasksWithPriorityCritical { get; set; }
+        public int NumberOfTasksWithPriorityVeryHigh { get; set; }
+        public int NumberOfTasksWithPriorityHigh { get; set; }
+        public int NumberOfTasksWithPriorityMedium { get; set; }
+        public int NumberOfTasksWithPriorityLow { get; set; }
 
-        public int NumberOfTaskWithStatusOpen { get; set; }
-        public int NumberOfTaskWithStatusInProgress { get; set; }
-        public int NumberOfTaskWithStatusCodeReview { get; set; }
-        public int NumberOfTaskWithStatusDone { get; set; }
+        public int NumberOfTasksWithStatusOpen { get; set; }
+        public int NumberOfTasksWithStatusInProgress { get; set; }
+        public int NumberOfTasksWithStatusCodeReview { get; set; }
+        public int NumberOfTasksWithStatusDone { get; set; }
 
-        public List<TaskModel> ListOfTasks { get; set; }
+        public List<TaskModel> ListOfAllTasks { get; set; }
+
+        public List<TaskModel> ListOfUserTasks { get; set; }
 
         public List<TaskModel> GetObjectsFromTable(string query)
         {
