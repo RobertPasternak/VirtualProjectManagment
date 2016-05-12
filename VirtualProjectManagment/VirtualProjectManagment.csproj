@@ -154,7 +154,7 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Shared\_ApplicationPartial.cshtml" />
-    <Content Include="Views\Application\AddTask.cshtml" />
+    <Content Include="Views\Application\TaskAdd.cshtml" />
     <Content Include="Views\Application\TaskDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

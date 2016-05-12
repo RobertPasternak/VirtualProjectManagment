@@ -28,7 +28,7 @@ namespace VirtualProjectManagment.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddTask()
+        public ActionResult TaskAdd()
         {
             BackendlessUser user = Backendless.UserService.CurrentUser;
             if (user == null)
@@ -39,7 +39,7 @@ namespace VirtualProjectManagment.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTask(TaskModel taskModel)
+        public ActionResult TaskAdd(TaskModel taskModel)
         {
             BackendlessUser user = Backendless.UserService.CurrentUser;
             if (user == null)
@@ -83,5 +83,13 @@ namespace VirtualProjectManagment.Controllers
 
             return View(task);
         }
+
+        public ActionResult TaskRemove(string id)
+        {
+            TaskModel task = taskRepo.GetObjectsFromTable("objectId LIKE '" + id + "'").First();
+            Backendless.Persistence.Of<TaskModel>().Remove(task);
+            return RedirectToAction("Overview", "Application");
+        }
+
     }
 }
