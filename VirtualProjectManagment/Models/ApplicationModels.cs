@@ -9,6 +9,7 @@ using System.Web.Configuration;
 using BackendlessAPI;
 using BackendlessAPI.Data;
 using BackendlessAPI.Persistence;
+using BackendlessAPI.Property;
 using VirtualProjectManagment.Services;
 using Weborb.Service;
 
@@ -137,5 +138,10 @@ namespace VirtualProjectManagment.Models
         public string TaskDescription { get; set; }
 
 
+        public IEnumerable<Users> UsersList { get; set; }
+
+
     }
+
+
 }

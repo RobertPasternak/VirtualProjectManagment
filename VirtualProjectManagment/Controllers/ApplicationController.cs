@@ -86,6 +86,22 @@ namespace VirtualProjectManagment.Controllers
 
         public ActionResult TaskRemove(string id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TaskModel task = taskRepo.GetObjectsFromTable("objectId LIKE '" + id + "'").First();
+            if (task == null)
+            {
+                return HttpNotFound();
+            }
+            return View(task);
+        }
+
+        [HttpPost, ActionName("TaskRemove")]
+        [ValidateAntiForgeryToken]
+        public ActionResult RaskremoveConfirmed(string id)
+        {
             TaskModel task = taskRepo.GetObjectsFromTable("objectId LIKE '" + id + "'").First();
             Backendless.Persistence.Of<TaskModel>().Remove(task);
             return RedirectToAction("Overview", "Application");

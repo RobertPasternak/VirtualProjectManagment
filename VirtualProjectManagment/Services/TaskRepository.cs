@@ -18,8 +18,7 @@ namespace VirtualProjectManagment.Services
 
         public int GetNumberOfObjectsFromTable(string query)
         {
-            string whereClause = (query);
-            BackendlessDataQuery dataQuery = new BackendlessDataQuery(whereClause) { QueryOptions = new QueryOptions() };
+            BackendlessDataQuery dataQuery = new BackendlessDataQuery(query) { QueryOptions = new QueryOptions() };
             return Backendless.Data.Of<TaskModel>().Find(dataQuery).TotalObjects;
         }
     }

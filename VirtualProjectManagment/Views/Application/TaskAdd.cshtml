@@ -1,8 +1,19 @@
-﻿@model VirtualProjectManagment.Models.TaskModel
+﻿@using VirtualProjectManagment.Services
+@model VirtualProjectManagment.Models.TaskModel
 
 
 @{
     ViewBag.Title = "Dodaj Zadanie";
+    var userList = new List<Object>();
+    UserRepository userRepo = new UserRepository();
+    foreach (var user in userRepo.GetListOfAllUsers())
+    {
+        userList.Add(new { value = user.name + " " + user.surname, text = user.name + " " + user.surname });
+    }
+
+    SelectList userSelectList = new SelectList(userList,
+        "value",
+        "text", "Wybierz Użytkownika");
 }
 
 
@@ -65,7 +76,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.TaskAssignedToUser, new { @class = "col-md-4 control-label" })
             <div class="col-md-8">
-                @Html.TextBoxFor(m => m.TaskAssignedToUser, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.TaskAssignedToUser, userSelectList, "Wybierz Użytkownika", new { @class = "form-control" })
             </div>
         </div>
 
