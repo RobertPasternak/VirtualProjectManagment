@@ -16,6 +16,7 @@ namespace VirtualProjectManagment.Controllers
     public class ApplicationController : Controller
     {
         private TaskRepository taskRepo = new TaskRepository();
+        private CommentRepository comRepo = new CommentRepository();
         // GET: Application
         public ActionResult Overview(OverviewModel overviewModel)
         {
@@ -67,6 +68,7 @@ namespace VirtualProjectManagment.Controllers
             return View(taskModel);
         }
 
+
         public ActionResult TaskDetails(string id)
         {
             if (id == null)
@@ -78,10 +80,30 @@ namespace VirtualProjectManagment.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            
+
+            //TaskModel task = taskRepo.GetObjectsFromTable("objectId LIKE '" + id + "'").First();
 
             TaskModel task = taskRepo.GetObjectsFromTable("objectId LIKE '" + id + "'").First();
-
+            task.CommentsList = comRepo.GetObjectsFromTable("TaskId LIKE '" + id + "'");
+            TempData["TaskID"] = id;
             return View(task);
+        }
+
+        [HttpPost]
+        public ActionResult TaskDetails(TaskModel taskModel)
+        {
+            BackendlessUser user = Backendless.UserService.CurrentUser;
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+                comRepo.AddComment((string) TempData["TaskID"], (string) user.Properties["name"],
+                    (string) user.Properties["surname"], taskModel.Comment, true);
+
+            return RedirectToAction("TaskDetails", taskModel.objectId);
+
         }
 
         public ActionResult TaskRemove(string id)
@@ -107,5 +129,15 @@ namespace VirtualProjectManagment.Controllers
             return RedirectToAction("Overview", "Application");
         }
 
+        public ActionResult EditComment(string id)
+        {
+            return RedirectToAction("Overview", "Application");
+        }
+
+        public ActionResult RemoveComment(string id)
+        {
+            comRepo.RemoveComment(id);
+            return RedirectToAction("Overview", "Application");
+        }
     }
 }

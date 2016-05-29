@@ -1,100 +1,117 @@
-﻿@using VirtualProjectManagment.Services
-@model VirtualProjectManagment.Models.TaskModel
+﻿@model VirtualProjectManagment.Models.TaskModel
 
 @{
     ViewBag.Title = "Szczegóły Zadania";
-
-    var userList = new List<Object>();
-    UserRepository userRepo = new UserRepository();
-    Model.UsersList = userRepo.GetListOfAllUsers();
-    foreach (var user in Model.UsersList)
-    {
-        userList.Add(new { value = user.name + " " + user.surname, text = user.name + " " + user.surname });
-    }
-
-    SelectList userSelectList = new SelectList(userList,
-        "value",
-        "text", "Wybierz Użytkownika");
-
-    /*
-
-            <p>
-            @Html.DropDownListFor(model => model.TaskAssignedToUser, userSelectList)
-        </p>
-
-        */
-
 }
 
 <h2>Szczegóły Zadania</h2>
+@using (Html.BeginForm())
+{
+    <div>
+        <hr/>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.TaskName)
+            </dt>
 
-<div>
+            <dd>
+                @Html.DisplayFor(model => model.TaskName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TaskPriority)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaskPriority)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TaskStatus)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaskStatus)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TaskCreateDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaskCreateDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TaskDueDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaskDueDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TaskAuthor)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaskAuthor)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TaskAssignedToUser)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaskAssignedToUser)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TaskDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaskDescription)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            @Html.ActionLink("Powrót do Przeglądu", "Overview") |
+            @Html.ActionLink("Usuń Zadanie", "TaskRemove", new { id = Model.objectId })
+        </div>
+    </div>
+
+    <hr/>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TaskName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TaskName)
-        </dd>
+    foreach (var comment in Model.CommentsList)
+    {
+            <div class="media form-group">
+                <div class="media-body">
+                    <h4 class="media-heading">@comment.AuthorName @comment.AuthorSurname
+                        <small>@comment.CommentDateTime</small>
+                        @if (@comment.CanBeEdited)
+                        {
+                            <small class="pull-right">@Html.ActionLink("Edytuj", "EditComment", new { id = @comment.objectId })  @Html.ActionLink("Usuń", "RemoveComment", new { id = @comment.objectId }) </small>
+                        }
+                    </h4>
+                </div>
+                <pre>@comment.CommentBody</pre>
+            </div>
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TaskPriority)
-        </dt>
+    
 
-        <dd>
-            @Html.DisplayFor(model => model.TaskPriority)
-        </dd>
+    <hr />
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Comment, new { @class = "col-md-12 control-label" })
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TaskStatus)
-        </dt>
+            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control" })
 
-        <dd>
-            @Html.DisplayFor(model => model.TaskStatus)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TaskCreateDate)
-        </dt>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.TaskCreateDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TaskDueDate)
-        </dt>
+    <div class="form-group">
 
-        <dd>
-            @Html.DisplayFor(model => model.TaskDueDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TaskAuthor)
-        </dt>
+            <input type="submit" value="Dodaj Komentarz" class="btn btn-default"/>
+        </div>
+    </div>
+}
 
-        <dd>
-            @Html.DisplayFor(model => model.TaskAuthor)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TaskAssignedToUser)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TaskAssignedToUser)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TaskDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TaskDescription)
-        </dd>
-
-
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Powrót do Przeglądu", "Overview") |
-    @Html.ActionLink("Usuń Zadanie", "TaskRemove", new { id = Model.objectId })
-</p>

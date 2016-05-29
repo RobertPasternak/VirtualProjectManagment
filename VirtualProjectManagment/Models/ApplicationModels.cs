@@ -132,13 +132,17 @@ namespace VirtualProjectManagment.Models
         [Display(Name = "Status Zadania")]
         public string TaskStatus { get; set; }
 
-
         [Required]
         [Display(Name = "Opis Zadania")]
         public string TaskDescription { get; set; }
 
-
         public IEnumerable<Users> UsersList { get; set; }
+
+        
+        [Display(Name = "Komentarz")]
+        public string Comment { get; set; }
+
+        public IEnumerable<Comments> CommentsList { get; set; }
 
 
     }
