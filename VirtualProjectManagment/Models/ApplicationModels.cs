@@ -21,13 +21,7 @@ namespace VirtualProjectManagment.Models
         {
             BackendlessUser user = Backendless.UserService.CurrentUser;
             TaskRepository taskRepo = new TaskRepository();
-            /*
-            m_nStart = Environment.TickCount;
-            Timer oTimer = new Timer();
-            oTimer.Elapsed += new ElapsedEventHandler(OnTimeEvent);
-            oTimer.Interval = 10;
-            oTimer.Enabled = true;
-            */
+
             ListOfAllTasks = taskRepo.GetObjectsFromTable("TaskName LIKE '%'");
             ListOfUserTasks = new List<TaskModel>();
 
@@ -60,23 +54,6 @@ namespace VirtualProjectManagment.Models
 
             }
         }
-
-       
-        /*
-        private int m_nStart = 0;
-
-
-
-        private void OnTimeEvent(object oSource,
-            ElapsedEventArgs oElapsedEventArgs)
-        {
-            System.Diagnostics.Debug.WriteLine("Upłyneło {0} milisekud",
-                Environment.TickCount - m_nStart);
-        }
-
-    */
-
-
 
         public int NumberOfTasksAssignedToUser { get; set; }
 
@@ -145,6 +122,35 @@ namespace VirtualProjectManagment.Models
         public IEnumerable<Comments> CommentsList { get; set; }
 
 
+    }
+
+    public class OverviewByStatus
+    {
+        TaskRepository taskRepo = new TaskRepository();
+
+        public OverviewByStatus(string status)
+        {
+            ListOfTasksByStatus = taskRepo.GetObjectsFromTable("TaskStatus LIKE '" + status + "'");
+            Status = status;
+        }
+
+        public string Status { get; set; }
+
+        public List<TaskModel> ListOfTasksByStatus { get; set; }
+    }
+
+    public class OverviewByPriority
+    {
+        TaskRepository taskRepo = new TaskRepository();
+        public OverviewByPriority(string priority)
+        {
+            ListOfTasksByPriority = taskRepo.GetObjectsFromTable("TaskPriority LIKE '" + priority + "'");
+            Priority = priority;
+        }
+
+        public string Priority { get; set; }
+
+        public List<TaskModel> ListOfTasksByPriority { get; set; }
     }
 
 

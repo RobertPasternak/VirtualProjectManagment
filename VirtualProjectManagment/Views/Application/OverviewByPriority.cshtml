@@ -1,0 +1,20 @@
+﻿@model VirtualProjectManagment.Models.OverviewByPriority
+
+@{
+    ViewBag.Title = "Przegląd Po Priorytecie";
+}
+
+
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="list-group">
+            <a class="list-group-item active"><span class="badge">@Model.ListOfTasksByPriority.Count</span>Przegląd po priorytecie zadania: @Model.Priority</a>
+            @foreach (var task in Model.ListOfTasksByPriority)
+            {
+                @Html.ActionLink(@task.TaskName, "TaskDetails", new { id = task.objectId }, new { @class = "list-group-item" })
+            }
+        </div>
+    </div>
+</div>

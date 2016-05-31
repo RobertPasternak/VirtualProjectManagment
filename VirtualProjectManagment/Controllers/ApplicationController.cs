@@ -135,5 +135,28 @@ namespace VirtualProjectManagment.Controllers
             comRepo.RemoveComment(id);
             return RedirectToAction("Overview", "Application");
         }
+
+        public ActionResult OverviewByStatus(string status)
+        {
+            BackendlessUser user = Backendless.UserService.CurrentUser;
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            OverviewByStatus overviewByStatus = new OverviewByStatus(status);
+            return View(overviewByStatus);
+        }
+
+        public ActionResult OverviewByPriority(string priority)
+        {
+            BackendlessUser user = Backendless.UserService.CurrentUser;
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            OverviewByPriority overviewByPriority = new OverviewByPriority(priority);
+            return View(overviewByPriority);
+        }
+
     }
 }

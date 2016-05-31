@@ -1,8 +1,10 @@
-﻿@model VirtualProjectManagment.Models.TaskModel
+﻿@using BackendlessAPI
+@model VirtualProjectManagment.Models.TaskModel
 
 @{
     ViewBag.Title = "Szczegóły Zadania";
-    
+    BackendlessUser user = Backendless.UserService.CurrentUser;
+    var currentUserId = user.Properties["objectId"];
 }
 
 <h2>Szczegóły Zadania</h2>
@@ -67,7 +69,7 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.TaskDescription)
+                <pre>@Html.DisplayFor(model => model.TaskDescription)</pre>
             </dd>
         </dl>
     </div>
@@ -75,58 +77,54 @@
     <div class="form-group">
         <div class="col-md-12">
             @Html.ActionLink("Powrót do Przeglądu", "Overview") |
-            @Html.ActionLink("Usuń Zadanie", "TaskRemove", new { id = Model.objectId })
+            @Html.ActionLink("Usuń Zadanie", "TaskRemove", new {id = Model.objectId})
         </div>
     </div>
-
-    <hr/>
     <hr />
-
-    foreach (var comment in Model.CommentsList)
-    {
+    if (Model.CommentsList.Any())
+    {     
+        <hr/>
+        foreach (var comment in Model.CommentsList)
+        {
             <div class="media form-group">
                 <div class="media-body">
-                    <h4 class="media-heading">@comment.AuthorName @comment.AuthorSurname
+                    <h4 class="media-heading">
+                        @comment.AuthorName @comment.AuthorSurname
                         <small>@comment.CommentDateTime</small>
-                        @if (@comment.CanBeEdited)
+                        @if (@comment.CanBeEdited && @comment.ownerId == (string)currentUserId)
                         {
-                            <small class="pull-right">@Html.ActionLink("Edytuj", "EditComment", new { id = @comment.objectId })  @Html.ActionLink("Usuń", "RemoveComment", new { id = @comment.objectId }) </small>
+                            <small class="pull-right">@Html.ActionLink("Edytuj", "EditComment", new {id = @comment.objectId}) @Html.ActionLink("Usuń", "RemoveComment", new {id = @comment.objectId}) </small>
                         }
                     </h4>
                 </div>
                 <pre>@comment.CommentBody</pre>
             </div>
+        }
     }
-
-    
-
     <hr />
+
     <div class="col-md-12">
         <div class="form-group">
-            @Html.LabelFor(m => m.Comment, new { @class = "col-md-12 control-label" })
-            <label class = "col-md-12 control-label" for="charLeft">Pozostało 500 znaków.</label>
-
-            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control"})
-
+            <label class="col-md-12 control-label" for="charLeft">Komentarz (Pozostało 500 znaków)</label>
+            @Html.TextAreaFor(m => m.Comment, new {@class = "form-control"})
         </div>
-
-    <div class="form-group">
-            
-            <input type="submit" value="Dodaj Komentarz" class="btn btn-default savebtn"/>
+        <div class="form-group">
+            <input type="submit" value="Dodaj Komentarz" class="btn btn-default submitbtn"/>
         </div>
     </div>
 }
 
 <script type="text/javascript">
-    $(document).ready(function () {        
-        $("#Comment").keyup(function () {
-           var textLength = $("#Comment").val().length;
-           var charactersLeft = 500 - textLength;
-           $("label[for='charLeft']").html("Pozostało " + charactersLeft + " znaków.");
-            if (textLength > 500) {
-                $(".savebtn").attr('disabled', 'disabled');
+    $(document).ready(function() {
+        $(".submitbtn").attr('disabled', 'disabled');
+        $("#Comment").keyup(function() {
+            var inputLength = $("#Comment").val().length;
+            var charactersLeft = 500 - inputLength;
+            $("label[for='charLeft']").html("Komentarz (Pozostało " + charactersLeft + " znaków)");
+            if (inputLength > 500 || inputLength == 0) {
+                $(".submitbtn").attr('disabled', 'disabled');
             } else {
-                $(".savebtn").removeAttr('disabled');
+                $(".submitbtn").removeAttr('disabled');
             }
         });
     });

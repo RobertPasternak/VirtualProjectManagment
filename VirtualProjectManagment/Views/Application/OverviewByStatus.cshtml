@@ -1,0 +1,22 @@
+﻿@model VirtualProjectManagment.Models.OverviewByStatus
+
+
+
+@{
+    ViewBag.Title = "Przegląd Po Statusie";
+}
+
+
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="list-group">
+            <a class="list-group-item active"><span class="badge">@Model.ListOfTasksByStatus.Count</span>Przegląd po statusie zadania: @Model.Status</a>
+            @foreach (var task in Model.ListOfTasksByStatus)
+            {
+                @Html.ActionLink(@task.TaskName, "TaskDetails", new { id = task.objectId }, new { @class = "list-group-item" })
+            }
+        </div>
+    </div>
+</div>

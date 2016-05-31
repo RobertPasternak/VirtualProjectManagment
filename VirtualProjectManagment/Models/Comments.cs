@@ -21,5 +21,7 @@ namespace VirtualProjectManagment.Models
 
         public DateTime CommentDateTime { get; set; }
 
+        public string ownerId { get; set; }
+
     }
 }

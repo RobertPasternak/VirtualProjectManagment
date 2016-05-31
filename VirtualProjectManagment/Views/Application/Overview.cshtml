@@ -17,8 +17,7 @@
                 @foreach (var task in Model.ListOfUserTasks)
                 {
                     @Html.ActionLink(@task.TaskName, "TaskDetails", new { id = task.objectId }, new { @class = "list-group-item" })
-                }
-            
+                }            
         </div>
     </div>
 </div>
@@ -27,68 +26,21 @@
     <div class="col-md-6">
         <div class="list-group">
             <a class="list-group-item active"><span class="badge">@Model.TotalNumberOfTasks</span>Lista Wszystkich Zadań (Status)</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusOpen</span>Otwarte</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusInProgress</span>W Trakcie</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusCodeReview</span>Przegląd Kodu</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusDone</span>Zakończone</a>
+            <a href="@Url.Action("OverviewByStatus", new { status="Otwarte"})" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusOpen</span>Otwarte</a>
+            <a href="@Url.Action("OverviewByStatus", new { status="W Trakcie"})" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusInProgress</span>W Trakcie</a>
+            <a href="@Url.Action("OverviewByStatus", new { status="Przegląd Kodu"})" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusCodeReview</span>Przegląd Kodu</a>
+            <a href="@Url.Action("OverviewByStatus", new { status="Zakończone"})" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithStatusDone</span>Zakończone</a>
         </div>
     </div>
     <div class="col-md-6">
         <div class="list-group">
             <a class="list-group-item active"><span class="badge">@Model.TotalNumberOfTasks</span>Lista Wszystkich Zadań (Priorytet)</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityCritical</span>Krytyczny</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityVeryHigh</span>Bardzo Wysoki</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityHigh</span>Wysoki</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityMedium</span>Średni</a>
-            <a href="#" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityLow</span>Niski</a>
+            <a href="@Url.Action("OverviewByPriority", new {priority = "Krytyczny"})" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityCritical</span>Krytyczny</a>
+            <a href="@Url.Action("OverviewByPriority", new {priority = "Bardzo Wysoki"})" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityVeryHigh</span>Bardzo Wysoki</a>
+            <a href="@Url.Action("OverviewByPriority", new {priority = "Wysoki"})" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityHigh</span>Wysoki</a>
+            <a href="@Url.Action("OverviewByPriority", new {priority = "Średni"})" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityMedium</span>Średni</a>
+            <a href="@Url.Action("OverviewByPriority", new {priority="Niski"})" class="list-group-item"><span class="badge">@Model.NumberOfTasksWithPriorityLow</span>Niski</a>           
         </div>
     </div>
 
 </div>
-
-    <!--
-
-    <div class="col-md-4">
-        <ul class="list-group">
-            <li> <a href="#" class="list-group-item active"><span class="badge">14</span>All Tasks by Status</a></li>
-            <li> <a href="#" class="list-group-item">
-
-                <span class="badge">14</span>Open
-            </a></li>
-            <li> <a href="#" class="list-group-item"><span class="badge">14</span>In Progress</a></li>
-            <li> <a href="#" class="list-group-item"><span class="badge">14</span>Code Review</a></li>
-            <li> <a href="#" class="list-group-item"><span class="badge">14</span>Done</a></li>
-        </ul>
-
-    </div>
-
-
-    <div class="col-md-4">
-        <div class="list-group">
-            <a href="#" class="list-group-item active"><span class="glyphicon glyphicon-search"></span><span class="badge">14</span>All Tasks by Priority</a>
-            <a href="#" class="list-group-item">
-
-                <div class="col-md-1">
-                    <span class="glyphicon glyphicon-search"></span>
-                </div>
-                <div class="col-md-11">
-                    <span class="badge">14</span>Highest
-                </div>
-
-            </a>
-            <a href="#" class="list-group-item"><span class="glyphicon glyphicon-search"></span><span class="badge">141415</span> | High</a>
-            <a href="#" class="list-group-item"><span class="glyphicon glyphicon-search"></span><span class="badge">14</span>Medium</a>
-            <a href="#" class="list-group-item"><span class="glyphicon glyphicon-search"></span><span class="badge">14</span>Low</a>
-            <a href="#" class="list-group-item"><span class="glyphicon glyphicon-search"></span><span class="badge">14</span>Lowest</a>
-        </div>
-    </div>
-
-    -->
-
-
-
-
-
-
-
-

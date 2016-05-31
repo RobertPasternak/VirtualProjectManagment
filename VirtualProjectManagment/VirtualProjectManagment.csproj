@@ -161,6 +161,8 @@
     <Content Include="Views\Application\TaskAdd.cshtml" />
     <Content Include="Views\Application\TaskDetails.cshtml" />
     <Content Include="Views\Application\TaskRemove.cshtml" />
+    <Content Include="Views\Application\OverviewByStatus.cshtml" />
+    <Content Include="Views\Application\OverviewByPriority.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
