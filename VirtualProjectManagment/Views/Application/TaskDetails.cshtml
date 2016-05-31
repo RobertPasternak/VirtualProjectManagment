@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Szczegóły Zadania";
+    
 }
 
 <h2>Szczegóły Zadania</h2>
@@ -103,15 +104,30 @@
     <div class="col-md-12">
         <div class="form-group">
             @Html.LabelFor(m => m.Comment, new { @class = "col-md-12 control-label" })
+            <label class = "col-md-12 control-label" for="charLeft">Pozostało 500 znaków.</label>
 
-            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control" })
+            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control"})
 
         </div>
 
     <div class="form-group">
-
-            <input type="submit" value="Dodaj Komentarz" class="btn btn-default"/>
+            
+            <input type="submit" value="Dodaj Komentarz" class="btn btn-default savebtn"/>
         </div>
     </div>
 }
 
+<script type="text/javascript">
+    $(document).ready(function () {        
+        $("#Comment").keyup(function () {
+           var textLength = $("#Comment").val().length;
+           var charactersLeft = 500 - textLength;
+           $("label[for='charLeft']").html("Pozostało " + charactersLeft + " znaków.");
+            if (textLength > 500) {
+                $(".savebtn").attr('disabled', 'disabled');
+            } else {
+                $(".savebtn").removeAttr('disabled');
+            }
+        });
+    });
+</script>

@@ -80,10 +80,6 @@ namespace VirtualProjectManagment.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
-
-            //TaskModel task = taskRepo.GetObjectsFromTable("objectId LIKE '" + id + "'").First();
-
             TaskModel task = taskRepo.GetObjectsFromTable("objectId LIKE '" + id + "'").First();
             task.CommentsList = comRepo.GetObjectsFromTable("TaskId LIKE '" + id + "'");
             TempData["TaskID"] = id;
