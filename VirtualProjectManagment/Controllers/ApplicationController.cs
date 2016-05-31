@@ -80,7 +80,7 @@ namespace VirtualProjectManagment.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            TaskModel task = taskRepo.GetObjectsFromTable("objectId LIKE '" + id + "'").First();
+            TaskModel task = taskRepo.GetListOfObjectsFromTable("objectId LIKE '" + id + "'").First();
             task.CommentsList = comRepo.GetObjectsFromTable("TaskId LIKE '" + id + "'");
             TempData["TaskID"] = id;
             return View(task);
@@ -108,7 +108,7 @@ namespace VirtualProjectManagment.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TaskModel task = taskRepo.GetObjectsFromTable("objectId LIKE '" + id + "'").First();
+            TaskModel task = taskRepo.GetListOfObjectsFromTable("objectId LIKE '" + id + "'").First();
             if (task == null)
             {
                 return HttpNotFound();
@@ -118,20 +118,30 @@ namespace VirtualProjectManagment.Controllers
 
         [HttpPost, ActionName("TaskRemove")]
         [ValidateAntiForgeryToken]
-        public ActionResult RaskremoveConfirmed(string id)
+        public ActionResult TaskRemoveConfirmed(string id)
         {
-            TaskModel task = taskRepo.GetObjectsFromTable("objectId LIKE '" + id + "'").First();
+            TaskModel task = taskRepo.GetListOfObjectsFromTable("objectId LIKE '" + id + "'").First();
             Backendless.Persistence.Of<TaskModel>().Remove(task);
             return RedirectToAction("Overview", "Application");
         }
 
         public ActionResult EditComment(string id)
         {
+            BackendlessUser user = Backendless.UserService.CurrentUser;
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return RedirectToAction("Overview", "Application");
         }
 
         public ActionResult RemoveComment(string id)
         {
+            BackendlessUser user = Backendless.UserService.CurrentUser;
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             comRepo.RemoveComment(id);
             return RedirectToAction("Overview", "Application");
         }
@@ -156,6 +166,43 @@ namespace VirtualProjectManagment.Controllers
             }
             OverviewByPriority overviewByPriority = new OverviewByPriority(priority);
             return View(overviewByPriority);
+        }
+
+
+        public ActionResult EditTask(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TaskModel task = taskRepo.GetListOfObjectsFromTable("objectId LIKE '" + id + "'").First();
+            if (task == null)
+            {
+                return HttpNotFound();
+            }
+            TempData["TaskID"] = id;
+            return View(task);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditTask([Bind(Include = "objectId,TaskDueDate,TaskAssignedToUser,TaskPriority,TaskStatus,TaskDescription,TaskName")] TaskModel taskModel)
+        {
+            BackendlessUser user = Backendless.UserService.CurrentUser;
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (ModelState.IsValid)
+            {
+                string taskId = TempData["TaskID"].ToString();
+                comRepo.AddComment(taskId, "Wiadomość",
+                    "Systemowa", (string)user.Properties["name"] + " " + (string)user.Properties["surname"] + " edytował to zadanie.", false);
+
+                taskRepo.UpdateTask(taskId, taskModel.TaskDueDate, taskModel.TaskAssignedToUser, taskModel.TaskPriority, taskModel.TaskStatus, taskModel.TaskDescription, taskModel.TaskName);
+                return RedirectToAction("Overview", "Application");
+            }
+            return View(taskModel);
         }
 
     }

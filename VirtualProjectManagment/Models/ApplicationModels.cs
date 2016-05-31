@@ -22,7 +22,7 @@ namespace VirtualProjectManagment.Models
             BackendlessUser user = Backendless.UserService.CurrentUser;
             TaskRepository taskRepo = new TaskRepository();
 
-            ListOfAllTasks = taskRepo.GetObjectsFromTable("TaskName LIKE '%'");
+            ListOfAllTasks = taskRepo.GetListOfObjectsFromTable("TaskName LIKE '%'");
             ListOfUserTasks = new List<TaskModel>();
 
             foreach (var task in ListOfAllTasks)
@@ -130,7 +130,7 @@ namespace VirtualProjectManagment.Models
 
         public OverviewByStatus(string status)
         {
-            ListOfTasksByStatus = taskRepo.GetObjectsFromTable("TaskStatus LIKE '" + status + "'");
+            ListOfTasksByStatus = taskRepo.GetListOfObjectsFromTable("TaskStatus LIKE '" + status + "'");
             Status = status;
         }
 
@@ -144,7 +144,7 @@ namespace VirtualProjectManagment.Models
         TaskRepository taskRepo = new TaskRepository();
         public OverviewByPriority(string priority)
         {
-            ListOfTasksByPriority = taskRepo.GetObjectsFromTable("TaskPriority LIKE '" + priority + "'");
+            ListOfTasksByPriority = taskRepo.GetListOfObjectsFromTable("TaskPriority LIKE '" + priority + "'");
             Priority = priority;
         }
 
