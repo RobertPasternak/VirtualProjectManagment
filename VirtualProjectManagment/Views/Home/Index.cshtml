@@ -2,41 +2,11 @@
     ViewBag.Title = "Index";
 }
 
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 <hr />
 
-<div class="skillbar clearfix " data-percent="65%">
-    <div class="skillbar-title" style="background: #88cd2a;"><span>HTML5</span></div>
-    <div class="skillbar-bar" style="background: #88cd2a;"></div>
-    <div class="skill-bar-percent">65%</div>
+<div class="jumbotron" style="background-image: url(http://smsc.com.pk/wp-content/uploads/2014/07/sales-and-account-managment1.png); background-size: 100% 100%;">
+    <h2>Wirtualne Zarządzanie Projektem</h2>
+    <p class="lead">Nie zwlekaj, wypróbuj już teraz!</p>
+    <p><a href="~/Account/Register" class="btn btn-primary btn-lg">Zarejestruj się &raquo;</a></p>
 </div>
-<div class="skillbar clearfix " data-percent="90%">
-    <div class="skillbar-title" style="background: #f7a53b;"><span>CSS3</span></div>
-    <div class="skillbar-bar" style="background: #f7a53b;"></div>
-    <div class="skill-bar-percent">90%</div>
-</div>
-<div class="skillbar clearfix " data-percent="55%">
-    <div class="skillbar-title" style="background: #6adcfa;"><span>WordPress</span></div>
-    <div class="skillbar-bar" style="background: #6adcfa;"></div>
-    <div class="skill-bar-percent">55%</div>
-</div>
-<div class="skillbar clearfix " data-percent="85%">
-    <div class="skillbar-title" style="background: #fa6e6e;"><span>PHP</span></div>
-    <div class="skillbar-bar" style="background: #fa6e6e;"></div>
-    <div class="skill-bar-percent">85%</div>
-</div>
-
-<div class="skillbar clearfix " data-percent="20%">
-    <div class="skillbar-title" style="background: #336699;"><span>jQuery</span></div>
-    <div class="skillbar-bar" style="background: #336699;"></div>
-    <div class="skill-bar-percent">20%</div>
-</div>
-
-<script>
-    jQuery('.skillbar').each(function(){
-
-        jQuery(this).find('.skillbar-bar').animate({
-            width:jQuery(this).attr('data-percent')
-    },6000);
-
-    });
-</script>

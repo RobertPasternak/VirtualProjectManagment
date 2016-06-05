@@ -77,7 +77,7 @@
     <div class="form-group">
         <div class="col-md-12">
             @Html.ActionLink("Powrót do Przeglądu", "Overview") |
-            @Html.ActionLink("Edytuj Zadanie", "EditTask", new { id = Model.objectId }) |
+            @Html.ActionLink("Edytuj Zadanie", "TaskEdit", new { id = Model.objectId }) |
             @Html.ActionLink("Usuń Zadanie", "TaskRemove", new {id = Model.objectId})
         </div>
     </div>
@@ -94,7 +94,7 @@
                         <small>@comment.CommentDateTime</small>
                         @if (@comment.CanBeEdited && @comment.ownerId == (string)currentUserId)
                         {
-                            <small class="pull-right">@Html.ActionLink("Edytuj", "EditComment", new {id = @comment.objectId}) @Html.ActionLink("Usuń", "RemoveComment", new {id = @comment.objectId}) </small>
+                            <small class="pull-right">@Html.ActionLink("Usuń", "RemoveComment", new {id = @comment.objectId}) </small>
                         }
                     </h4>
                 </div>

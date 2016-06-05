@@ -81,7 +81,7 @@ namespace VirtualProjectManagment.Controllers
                 return RedirectToAction("Index", "Home");
             }
             TaskModel task = taskRepo.GetListOfObjectsFromTable("objectId LIKE '" + id + "'").First();
-            task.CommentsList = comRepo.GetObjectsFromTable("TaskId LIKE '" + id + "'");
+            task.CommentsList = comRepo.GetListOfObjectsFromTable("TaskId LIKE '" + id + "'");
             TempData["TaskID"] = id;
             return View(task);
         }
@@ -125,15 +125,6 @@ namespace VirtualProjectManagment.Controllers
             return RedirectToAction("Overview", "Application");
         }
 
-        public ActionResult EditComment(string id)
-        {
-            BackendlessUser user = Backendless.UserService.CurrentUser;
-            if (user == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            return RedirectToAction("Overview", "Application");
-        }
 
         public ActionResult RemoveComment(string id)
         {
@@ -169,7 +160,7 @@ namespace VirtualProjectManagment.Controllers
         }
 
 
-        public ActionResult EditTask(string id)
+        public ActionResult TaskEdit(string id)
         {
             if (id == null)
             {
@@ -186,7 +177,7 @@ namespace VirtualProjectManagment.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditTask([Bind(Include = "objectId,TaskDueDate,TaskAssignedToUser,TaskPriority,TaskStatus,TaskDescription,TaskName")] TaskModel taskModel)
+        public ActionResult TaskEdit([Bind(Include = "objectId,TaskDueDate,TaskAssignedToUser,TaskPriority,TaskStatus,TaskDescription,TaskName")] TaskModel taskModel)
         {
             BackendlessUser user = Backendless.UserService.CurrentUser;
             if (user == null)

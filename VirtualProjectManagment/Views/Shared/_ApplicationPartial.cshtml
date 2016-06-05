@@ -9,18 +9,10 @@
 {
 
     @Html.AntiForgeryToken()
-
     <ul class="nav navbar-nav">
         <li>@Html.ActionLink("Przegląd", "Overview", "Application")</li>
         <li>@Html.ActionLink("Dodaj Zadanie", "TaskAdd", "Application")</li>
     </ul>
+}
 
-}
-else
-{
-    <ul class="nav navbar-nav">
-        <li>@Html.ActionLink("Informacje", "Index", "Home")</li>
-        <li>@Html.ActionLink("Kontakt", "Index", "Home")</li>
-    </ul>
-}
 

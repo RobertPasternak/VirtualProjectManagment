@@ -40,8 +40,7 @@ namespace VirtualProjectManagment.Services
                 task.TaskDescription = description;
                 task.TaskName = taskName;
                 Backendless.Persistence.Save(task);
-            }
-            
+            }            
         }
     }
 }
