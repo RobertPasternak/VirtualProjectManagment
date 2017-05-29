@@ -1,5 +1,5 @@
 # VirtualProjectManagment
-Projekt do pracy inżynierskiej, tworzony w ASP.NET MVC5. 
+Projekt tworzony w ASP.NET MVC5. 
 Projekt opiera się na usługach MBaaS od Backendless.
 Aplikacja ma służyć do zarządzania projektem, podobnie do znanej aplikacji JIRA.
 
